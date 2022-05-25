@@ -214,8 +214,9 @@ input:focus {
 }
 
 .about-link {
-  display: flex;
-  justify-content: flex-end;
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
 }
 
 
