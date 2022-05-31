@@ -1,14 +1,11 @@
-import { createContext, useState } from "react";
-import { v4 as uuidv4 } from "uuid";
+import { createContext, useState, useEffect } from "react";
+import axios from "axios";
 
 const FeedbackContext = createContext();
 
 export const FeedbackProvider = ({ children }) => {
-  const [feedback, setFeedback] = useState([
-    { id: "1", rating: 8, text: "Feedback 01" },
-    { id: "2", rating: 4, text: "Feedback 02" },
-    { id: "3", rating: 7, text: "Feedback 03" },
-  ]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [feedback, setFeedback] = useState([]);
   const [popup, setPopup] = useState({
     show: false,
     id: null,
@@ -18,6 +15,20 @@ export const FeedbackProvider = ({ children }) => {
     edit: false,
   });
 
+  useEffect(() => {
+    fetchFeedback();
+  }, []);
+
+  const fetchFeedback = () => {
+    axios
+      .get("/feedback")
+      .then(({ data }) => {
+        setFeedback(data);
+        setIsLoading(false);
+      })
+      .catch((error) => console.log(error));
+  };
+
   const deleteFeedback = (id) => {
     setPopup({
       show: true,
@@ -26,11 +37,17 @@ export const FeedbackProvider = ({ children }) => {
   };
   const handleDeleteTrue = () => {
     if (popup.show && popup.id) {
-      setFeedback(feedback.filter((item) => item.id !== popup.id));
-      setPopup({
-        show: false,
-        id: null,
-      });
+      axios
+        .delete(`/feedback/${popup.id}`)
+        .then((res) => {
+          setPopup({
+            show: false,
+            id: null,
+          });
+          fetchFeedback()
+          
+        })
+        .catch((e) => console.log(e));
     }
   };
 
@@ -42,8 +59,14 @@ export const FeedbackProvider = ({ children }) => {
   };
 
   const addFeedback = (newFeedback) => {
-    newFeedback.id = uuidv4();
-    setFeedback([newFeedback, ...feedback]);
+    axios
+      .post("/feedback", newFeedback)
+      .then(({data}) => {
+         setFeedback([data,...feedback])
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   };
 
   const editFeedback = (item) => {
@@ -53,9 +76,13 @@ export const FeedbackProvider = ({ children }) => {
     });
   };
   const updateFeedback = (id, upItem) => {
-    setFeedback(
-      feedback.map((item) => (item.id === id ? { ...item, ...upItem } : item))
-    );
+    axios
+    .put(`/feedback/${id}`,upItem).then(({data})=>{
+      setFeedback(
+        feedback.map((item) => (item.id === id ? data : item))
+      );
+    }).catch((e)=>console.log(e))
+  
   };
 
   return (
@@ -68,6 +95,7 @@ export const FeedbackProvider = ({ children }) => {
           handleDeleteFalse,
           addFeedback,
           popup,
+          isLoading,
           editFeedback,
           feedbackEdit,
           updateFeedback,

@@ -15,12 +15,15 @@ export default function App() {
         <Header />
 
         <div className="container">
+         
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="about" element={<AboutPage />} />
           </Routes>
+        
+          <AbouticonLink />
         </div>
-        <AbouticonLink />
+       
       </FeedbackProvider>
     </>
   );

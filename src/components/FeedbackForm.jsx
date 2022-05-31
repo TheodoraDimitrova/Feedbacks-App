@@ -6,7 +6,7 @@ import { useContext ,useState, useEffect } from "react";
 import FeedbackContext from "../context/FeedbackContext";
 
 export default function FeedbackForm() {
-  const { feedbackEdit,setFeedback, addFeedback, updateFeedback } = useContext(FeedbackContext);
+  const { feedbackEdit, addFeedback, updateFeedback } = useContext(FeedbackContext);
   const [text, setText] = useState("");
   const [rating, setRating] = useState();
   const [btnDisabled, setBtnDisabled] = useState(true);

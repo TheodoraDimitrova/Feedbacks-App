@@ -1,6 +1,6 @@
 
 import { motion } from "framer-motion";
-import { useContext ,useState, useEffect } from "react";
+import { useContext , useEffect } from "react";
 import FeedbackContext from "../context/FeedbackContext";
 
 
@@ -33,7 +33,7 @@ export default function RaitingSelect({ selectRatingNum, messageRating ,rating})
                   name="rating"
                   value={i}
                   onChange={handleChange}
-                  checked={rating==i}
+                  checked={rating===i}
                 />
                 <label htmlFor={`num${i}`}>{i}</label>
               </motion.li>
