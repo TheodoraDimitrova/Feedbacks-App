@@ -2,7 +2,7 @@
   "name": "feedback-app",
   "version": "0.1.0",
   "private": true,
-  "proxy":"http://localhost:5000",
+  "proxy": "http://localhost:5000",
   "main": "server.js",
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.4",
@@ -10,8 +10,10 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^0.27.2",
     "concurrently": "^7.2.1",
+    "express": "^4.18.1",
     "framer-motion": "^6.3.3",
     "json-server": "^0.17.0",
+    "path": "^0.12.7",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "react-icons": "^4.3.1",
@@ -20,8 +22,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "node server.js",
-   
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
